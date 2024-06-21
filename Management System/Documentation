@@ -1,0 +1,44 @@
+Interfaces and Abstract Classes
+1. Item Interface:
+ -> Defines methods for getting item details, calculating value, and displaying the item's description.
+
+2. Categorizable Interface:
+ -> Includes methods for setting and getting the item category.
+
+3. Breakable Interface:
+ -> Include methods for checking if an item is breakable and for handling item breakage.
+
+4. Perishable Interface:
+ -> Include methods for checking if an item is perishable and for handling item expiration.
+
+5. Sellable Interface:
+ -> Include methods for setting and getting item prices.
+
+6. Abstract Item Class:
+ -> An abstract class AbstractItem that implements the Item, Categorizable, Breakable, Perishable, and Sellable interfaces.
+ -> Implement common functionality such as getting item details.
+ -> Provides default implementations for category, breakable, perishable, and sellable attributes.
+
+7. Inventory Superclass:
+ -> Has an InventoryItem superclass.
+ -> Implement getters and setters for ID and quantity.
+
+8. Item Types:
+ -> Has subclasses for specific item types like ElectronicsItem, GroceryItem, and FragileItem that inherit from InventoryItem.
+ -> Implements constructors for these subclasses to set specific attributes like weight for fragile items.
+ -> Override relevant methods to calculate item values differently for each type.
+
+9. File I/O:
+ -> Implement methods to save and load inventory data to/from text files.
+ -> Uses a well-defined file format for data storage.
+
+10. User Interface:
+ -> Has a CLI
+
+11. Payments and Orders:
+ -> Implements classes for Payment and Order.
+ -> Allows users to create orders, calculate order totals, and process payments.
+ -> Updates inventory quantities after orders are placed.
+
+12. Error Handling:
+ -> Implements robust error handling to address potential issues, such as invalid user input, file I/O errors, and handling exceptions properly.
