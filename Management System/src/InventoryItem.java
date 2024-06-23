@@ -5,6 +5,10 @@ public class InventoryItem extends AbstractItem{
     private int quantity;
     private double price;
 
+    public InventoryItem(){
+
+    }
+
     public InventoryItem(String itemID, int quantity, double price) {
         this.itemID = itemID;
         this.quantity = quantity;

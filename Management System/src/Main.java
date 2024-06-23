@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import static java.lang.StringTemplate.STR;
 
 public class Main {
@@ -31,6 +32,7 @@ public class Main {
                     seeAllItems();
                     break;
                 case "3":
+                    placeOrder();
                     break;
                 case "4":
                     isRunning = false;
@@ -66,16 +68,16 @@ public class Main {
             String input = sc.nextLine();
             switch (input) {
                 case "1":
-                    addNormalProduct();
+                    addProduct("Normal");
                     break;
                 case "2":
-                    addElectricProduct();
+                    addProduct("Electronics");
                     break;
                 case "3":
-                    addGroceryProduct();
+                    addProduct("Grocery");
                     break;
                 case "4":
-                    addFragileProduct();
+                    addProduct("Fragile");
                     break;
                 case "5":
                     isRunning = false;
@@ -90,155 +92,123 @@ public class Main {
     }
 
     //2.2 Save the input in files every time they choose [Done]
-    public static void addNormalProduct() {
+    public static void addProduct(String category) {
+        String path = "D:\\Petko\\SirmaAcademy\\Sirma Academy\\Management System\\items.ser";
+        System.out.println("Enter the desired product in the following order separated by space: name quantity price");
+        System.out.println("Write \"End\" when you want to exit");
+        Scanner sc =new Scanner(System.in);
+        String[] command = sc.nextLine().split(" ");
+        boolean append = new File(path).exists();
 
-        List<InventoryItem> list = loadItems("D:\\Petko\\SirmaAcademy\\Management System\\items.ser");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name, quantity and price of the item separated with an empty space:");
-        System.out.println("Type \"End\" when you want to exit ");
+        while (!command[0].equals("End")) {
+            try (FileOutputStream fos = new FileOutputStream(path, true);
+                 ObjectOutputStream oos = append ? new AppendingObjectOutputStream(fos) : new ObjectOutputStream(fos)) {
 
-        String inputLine = sc.nextLine();
+                String name = command[0];
+                int quantity = Integer.parseInt(command[1]);
+                double price = Double.parseDouble(command[2]);
+                InventoryItem item = null;
 
-        while (!inputLine.equals("End")) {
-            String[] input = inputLine.split(" ");
-            try {
-                InventoryItem item = new InventoryItem(input[0], Integer.parseInt(input[1]), Double.parseDouble(input[2]));
-                list.add(item);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter the data in the format: name quantity price");
+                switch (category) {
+                    case "Normal":
+                        item = new InventoryItem(name, quantity, price);
+                        break;
+                    case "Electronics":
+                        item = new ElectronicsItem(name, quantity, price);
+                        break;
+                    case "Grocery":
+                        item = new GroceryItem(name, quantity, price);
+                        break;
+                    case "Fragile":
+                        item = new FragileItem(name, quantity, price);
+                        break;
+                }
+
+                if (item != null) {
+                    oos.writeObject(item);
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException("Error writing to file", e);
             }
 
-            inputLine = sc.nextLine();
+            command = sc.nextLine().split(" ");
+            append = true;  // Set append to true after the first iteration
         }
-
-        saveItems(list, "D:\\Petko\\SirmaAcademy\\Management System\\items.ser");
 
     }
 
-    public static void addElectricProduct() {
-        List<InventoryItem> list = loadItems("D:\\Petko\\SirmaAcademy\\Management System\\electricItems.ser");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name, quantity and price of the item separated with an empty space:");
-        System.out.println("Type \"End\" when you want to exit ");
-
-        String inputLine = sc.nextLine();
-
-        while (!inputLine.equals("End")) {
-            String[] input = inputLine.split(" ");
-            try {
-                InventoryItem item = new ElectronicsItem(input[0], Integer.parseInt(input[1]), Double.parseDouble(input[2]));
-                list.add(item);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter the data in the format: name quantity price");
-            }
-
-            inputLine = sc.nextLine();
+    //I have used external sources to help me write this part of the code
+    private static class AppendingObjectOutputStream extends ObjectOutputStream {
+        public AppendingObjectOutputStream(OutputStream out) throws IOException {
+            super(out);
         }
 
-        saveItems(list, "D:\\Petko\\SirmaAcademy\\Management System\\electricItems.ser");
-    }
-
-
-
-
-
-    public static void addGroceryProduct() {
-
-        List<InventoryItem> list = loadItems("D:\\Petko\\SirmaAcademy\\Management System\\groceryItems.ser");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name, quantity and price of the item separated with an empty space:");
-        System.out.println("Type \"End\" when you want to exit ");
-
-        String inputLine = sc.nextLine();
-
-        while (!inputLine.equals("End")) {
-            String[] input = inputLine.split(" ");
-            try {
-                InventoryItem item = new GroceryItem(input[0], Integer.parseInt(input[1]), Double.parseDouble(input[2]));
-                list.add(item);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter the data in the format: name quantity price");
-            }
-
-            inputLine = sc.nextLine();
-        }
-
-        saveItems(list, "D:\\Petko\\SirmaAcademy\\Management System\\groceryItems.ser");
-
-    }
-
-    public static void addFragileProduct() {
-
-        List<InventoryItem> list = loadItems("D:\\Petko\\SirmaAcademy\\Management System\\fragileItems.ser");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the name, quantity and price of the item separated with an empty space:");
-        System.out.println("Type \"End\" when you want to exit ");
-
-        String inputLine = sc.nextLine();
-
-        while (!inputLine.equals("End")) {
-            String[] input = inputLine.split(" ");
-            try {
-                InventoryItem item = new FragileItem(input[0], Integer.parseInt(input[1]), Double.parseDouble(input[2]));
-                list.add(item);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter the data in the format: name quantity price");
-            }
-
-            inputLine = sc.nextLine();
-        }
-
-        saveItems(list, "D:\\Petko\\SirmaAcademy\\Management System\\fragileItems.ser");
-    }
-
-    private static List<InventoryItem> loadItems(String filePath) {
-        List<InventoryItem> items = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            items = (List<InventoryItem>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-        }
-        return items;
-    }
-
-    private static void saveItems(List<InventoryItem> items, String filePath) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-            oos.writeObject(items);
-        } catch (IOException e) {
-            e.printStackTrace();
+        @Override
+        protected void writeStreamHeader() throws IOException {
+            reset();
         }
     }
 
     public static void seeAllItems() {
         List<InventoryItem> loadedItems = new ArrayList<>();
-        String path1 = "D:\\Petko\\SirmaAcademy\\Management System\\items.ser";
-        String path2 = "D:\\Petko\\SirmaAcademy\\Management System\\electricItems.ser";
-        String path3 = "D:\\Petko\\SirmaAcademy\\Management System\\groceryItems.ser";
-        String path4 = "D:\\Petko\\SirmaAcademy\\Management System\\fragileItems.ser";
-        String[] paths = {path1, path2, path3, path4};
+        String path = "D:\\Petko\\SirmaAcademy\\Sirma Academy\\Management System\\items.ser";
 
-        for (String path : paths) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
-                List<InventoryItem> items = (List<InventoryItem>) ois.readObject();
-                loadedItems.addAll(items);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
+
+            while (true) {
+                try {
+                    InventoryItem obj = (InventoryItem) ois.readObject();
+                    loadedItems.add(obj);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    // End of file reached
+                    break;
+                }
             }
-        }
-        // Print the loaded persons
-        if (loadedItems != null) {
-            for (InventoryItem item : loadedItems) {
 
-                if (item.isBreakable()){
-                    System.out.println(STR."Name: \{item.getItemID()} Quantity: \{item.getQuantity()} Price: \{item.getPrice()} Category: \{item.getCategory()} How to handle: \{item.HowToHandle()}");
-                } else if (item.isPerishable()) {
-                    System.out.println(STR."Name: \{item.getItemID()} Quantity: \{item.getQuantity()} Price: \{item.getPrice()} Category: \{item.getCategory()} Expire Date: \{item.expireDate()}");
-                }else{
-                    System.out.println(STR."Name: \{item.getItemID()} Quantity: \{item.getQuantity()} Price: \{item.getPrice()} Category: \{item.getCategory()}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (loadedItems != null) {
+            for (InventoryItem oneItem : loadedItems) {
+
+                if (oneItem.isBreakable()) {
+                    System.out.println(STR."Name: \{oneItem.getItemID()} Quantity: \{oneItem.getQuantity()} Price: \{oneItem.getPrice()} Category: \{oneItem.getCategory()} How to handle: \{oneItem.HowToHandle()}");
+                } else if (oneItem.isPerishable()) {
+                    System.out.println(STR."Name: \{oneItem.getItemID()} Quantity: \{oneItem.getQuantity()} Price: \{oneItem.getPrice()} Category: \{oneItem.getCategory()} Expire Date: \{oneItem.expireDate()}");
+                } else {
+                    System.out.println(STR."Name: \{oneItem.getItemID()} Quantity: \{oneItem.getQuantity()} Price: \{oneItem.getPrice()} Category: \{oneItem.getCategory()}");
                 }
 
             }
 
         }
+    }
+
+    public static void placeOrder() {
+        //1. Load all items
+
+
+        //2.Select item.Name == list.getKey()
+        System.out.println("Select which item you want and the value you want it:");
+        Scanner sc = new Scanner(System.in);
+        String[] input = sc.nextLine().split(" ");
+        String itemName = input[0];
+        int itemQuantity = Integer.parseInt(input[1]);
+        //3. item.setQuantity - 1; if(quan == 0) -> remove from list remove(item.getName)
+//        for (InventoryItem item : loadedItems) {
+//            if (item.getName().equals(itemName)) {
+//                int newQuantity = item.getQuantity() - itemQuantity;
+//                item.setQuantity(newQuantity);
+//
+//            }
+//        }
+        //4. Calculate value
+        //5. Choose Card or Cash
+        //6. "Pay"
     }
 
 }
