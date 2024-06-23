@@ -15,7 +15,7 @@ public class Main {
             //--Add items - 2
             System.out.println("1. Add items");
             //--See all items - 3
-            System.out.println("2. See all items"); //TO DO... Category is now showing, FIX IT
+            System.out.println("2. See all items");
             //--Place Order
             System.out.println("3. Place order");
             //--Exit
@@ -151,26 +151,7 @@ public class Main {
     }
 
     public static void seeAllItems() {
-        List<InventoryItem> loadedItems = new ArrayList<>();
-        String path = "D:\\Petko\\SirmaAcademy\\Sirma Academy\\Management System\\items.ser";
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
-
-            while (true) {
-                try {
-                    InventoryItem obj = (InventoryItem) ois.readObject();
-                    loadedItems.add(obj);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    // End of file reached
-                    break;
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<InventoryItem> loadedItems = loadItems();
 
         if (loadedItems != null) {
             for (InventoryItem oneItem : loadedItems) {
@@ -188,9 +169,33 @@ public class Main {
         }
     }
 
+    public static List<InventoryItem> loadItems(){
+        List<InventoryItem> loadedItems = new ArrayList<>();
+        String path = "D:\\Petko\\SirmaAcademy\\Sirma Academy\\Management System\\items.ser";
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
+
+            while (true) {
+                try {
+                    InventoryItem obj = (InventoryItem) ois.readObject();
+                    loadedItems.add(obj);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    break;
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return loadedItems;
+    }
+
     public static void placeOrder() {
         //1. Load all items
-
+        List<InventoryItem> loadedItems = loadItems();
 
         //2.Select item.Name == list.getKey()
         System.out.println("Select which item you want and the value you want it:");
@@ -198,17 +203,30 @@ public class Main {
         String[] input = sc.nextLine().split(" ");
         String itemName = input[0];
         int itemQuantity = Integer.parseInt(input[1]);
+        double value = 0;
+
+        // FIX CODE BELOW
         //3. item.setQuantity - 1; if(quan == 0) -> remove from list remove(item.getName)
-//        for (InventoryItem item : loadedItems) {
-//            if (item.getName().equals(itemName)) {
-//                int newQuantity = item.getQuantity() - itemQuantity;
-//                item.setQuantity(newQuantity);
-//
-//            }
-//        }
+        for (InventoryItem item : loadedItems) {
+            if (item.getName().equals(itemName)) {
+                int newQuantity = item.getQuantity() - itemQuantity;
+                value = itemQuantity * item.getPrice();
+                item.setQuantity(newQuantity);
+                System.out.println("Happening");
+                //TO DO ... Add file save with new quantities
+            }
+        }
         //4. Calculate value
+        System.out.println("It will cost you: " + value);
         //5. Choose Card or Cash
+        System.out.println("Cash or Card?");
+        System.out.println("1. Cash");
+        System.out.println("2. Card");
+        Scanner lol = new Scanner(System.in);
+        int yes = Integer.parseInt(lol.nextLine());
         //6. "Pay"
+        System.out.println("Paying...");
+        System.out.println("Paid");
     }
 
 }
