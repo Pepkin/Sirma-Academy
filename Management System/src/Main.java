@@ -96,7 +96,7 @@ public class Main {
         String path = "D:\\Petko\\SirmaAcademy\\Sirma Academy\\Management System\\items.ser";
         System.out.println("Enter the desired product in the following order separated by space: name quantity price");
         System.out.println("Write \"End\" when you want to exit");
-        Scanner sc =new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         String[] command = sc.nextLine().split(" ");
         boolean append = new File(path).exists();
 
@@ -133,7 +133,7 @@ public class Main {
             }
 
             command = sc.nextLine().split(" ");
-            append = true;  // Set append to true after the first iteration
+            append = true;
         }
 
     }
