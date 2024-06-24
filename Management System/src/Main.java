@@ -195,6 +195,7 @@ public class Main {
 
     public static void placeOrder() {
         //1. Load all items
+        String path = "D:\\Petko\\SirmaAcademy\\Sirma Academy\\Management System\\items.ser";
         List<InventoryItem> loadedItems = loadItems();
 
         //2.Select item.Name == list.getKey()
@@ -204,18 +205,29 @@ public class Main {
         String itemName = input[0];
         int itemQuantity = Integer.parseInt(input[1]);
         double value = 0;
+        boolean append = new File(path).exists();
 
-        // FIX CODE BELOW
         //3. item.setQuantity - 1; if(quan == 0) -> remove from list remove(item.getName)
         for (InventoryItem item : loadedItems) {
-            if (item.getName().equals(itemName)) {
+            if (item.getItemID().equals(itemName)) {
                 int newQuantity = item.getQuantity() - itemQuantity;
                 value = itemQuantity * item.getPrice();
                 item.setQuantity(newQuantity);
-                System.out.println("Happening");
-                //TO DO ... Add file save with new quantities
+                if(item.getQuantity() == 0){
+                    loadedItems.remove(item);
+                }
             }
         }
+
+        try (FileOutputStream fos = new FileOutputStream(path);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            for (InventoryItem item : loadedItems) {
+                oos.writeObject(item);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //4. Calculate value
         System.out.println("It will cost you: " + value);
         //5. Choose Card or Cash
