@@ -2,16 +2,10 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        Scale<Integer> scale = new Scale<>(10,20);
+        System.out.println(scale.getHeavier());
 
-        Integer[] intArray = ArrayCreator.create(5, 42);
-        for (Integer num : intArray) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
-        
-        String[] strArray = ArrayCreator.create(String.class, 3, "Hello");
-        for (String str : strArray) {
-            System.out.print(str + " ");
-        }
+        Scale<String> scale2 = new Scale<>("No", "Hello");
+        System.out.println(scale2.getHeavier());
     }
 }
