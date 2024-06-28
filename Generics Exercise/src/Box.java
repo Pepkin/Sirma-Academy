@@ -1,19 +1,15 @@
 public class Box<T> {
-    private StringBuilder sb;
-    private String text;
+    private T[] array;
 
     Box(T[] array){
-        sb = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            sb.append(array[i]);
-            sb.append(" ");
-        }
-        this.text = sb.toString();
+        this.array = array;
     }
 
     @Override
     public String toString() {
-        System.out.println(STR."java.lang.String: \{this.text}");
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(STR."\{this.array[i].getClass().getName()}: \{this.array[i]}");
+        }
         return null;
     }
 }

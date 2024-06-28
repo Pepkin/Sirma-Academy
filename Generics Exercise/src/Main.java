@@ -8,16 +8,24 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int commands = Integer.parseInt(sc.nextLine());
-        List<Box> list = new ArrayList<>();
+        List list = new ArrayList<>();
 
         for (int i = 0; i < commands; i++) {
-            String[] input = sc.nextLine().split(" ");
-            Box<String> box = new Box<>(input);
-            list.add(box);
+            String input = sc.nextLine();
+
+            try{
+                list.add(Integer.parseInt(input));
+            }catch(NumberFormatException e){
+                list.add(input);
+            }
         }
 
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).toString();
-        }
+        String[] indexes = sc.nextLine().split(" ");
+        int firstIndex = Integer.parseInt(indexes[0]);
+        int secondIndex = Integer.parseInt(indexes[1]);
+
+        Swap swap = new Swap<>(list, firstIndex, secondIndex);
+
+        swap.toString();
     }
 }
