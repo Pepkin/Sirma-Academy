@@ -49,8 +49,8 @@ public class Manager {
     }
 
     public void Edit(String id){
-        String[] inputChange = scanner.nextLine().split(", ");
         System.out.println("Enter Name, Department, Role, Salary ");
+        String[] inputChange = scanner.nextLine().split(", ");
         String nameChange = inputChange[0];
         String departmentChange = inputChange[1];
         String roleChange = inputChange[2];

@@ -71,14 +71,21 @@ public class Service {
     }
 
     public void searchEmployees(String where, String what) {
+        boolean nothingFound = true;
         for (Employee employee : employees) {
-            if (where.equalsIgnoreCase("name") && employee.getName().equalsIgnoreCase(what)
-                    || where.equalsIgnoreCase("id") && employee.getId().equalsIgnoreCase(what)
-                    || where.equalsIgnoreCase("department") && employee.getDepartment().equalsIgnoreCase(what)) {
-                System.out.println(employee);
-            }else{
-                System.out.println("Nothing found");
+            if ((where.equalsIgnoreCase("name") && employee.getName().equalsIgnoreCase(what))
+                    || (where.equalsIgnoreCase("id") && employee.getId().equalsIgnoreCase(what))
+                    || (where.equalsIgnoreCase("department") && employee.getDepartment().equalsIgnoreCase(what))) {
+
+                if(employee.getEndDate().equals("null")){
+                    System.out.println(employee);
+                    nothingFound = false;
+                }
+
             }
+        }
+        if(nothingFound){
+            System.out.println("Nothing found");
         }
     }
 }
