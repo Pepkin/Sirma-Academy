@@ -8,10 +8,11 @@ public class DatabaseReader implements Reader {
     @Override
     public List<Employee> read(String filePath) {
         List<Employee> employees = new ArrayList<>();
+        // Reads the file and stores the data for the session
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(", ");
+                String[] data = line.split(",");
                 String id = data[0];
                 String name = data[1];
                 String startDate = data[2];

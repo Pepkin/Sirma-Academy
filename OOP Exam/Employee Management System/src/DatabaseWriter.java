@@ -6,9 +6,13 @@ import java.util.List;
 public class DatabaseWriter implements Writer {
     @Override
     public void write(String filePath, List<Employee> employees) {
+
+        // Saves the data in the file for the session
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath) {
         })) {
+
             int size = employees.size();
+
             for (int i = 0; i < size; i++) {
                 Employee employee = employees.get(i);
                 bw.write(String.format("%s,%s,%s,%s,%s,%s,%.2f",
@@ -17,7 +21,9 @@ public class DatabaseWriter implements Writer {
                 if (i < size - 1) {
                     bw.write("\n");
                 }
+
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

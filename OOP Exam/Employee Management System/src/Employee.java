@@ -35,10 +35,6 @@ public class Employee implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return this.name;
     }
@@ -76,7 +72,7 @@ public class Employee implements Serializable {
     }
 
     public String getEndDate() {
-        return endDate.trim();
+        return endDate;
     }
 
     public void setEndDate(String endDate) {
@@ -85,6 +81,6 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return STR."\{this.id}, \{this.name},\{this.startDate}, \{this.endDate}, \{this.department}, \{this.role}, \{this.salary}";
+        return STR."\{this.id}, \{this.name}, \{this.startDate}, \{this.endDate}, \{this.department}, \{this.role}, \{this.salary}";
     }
 }

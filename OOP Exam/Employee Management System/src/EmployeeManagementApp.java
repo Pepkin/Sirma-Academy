@@ -28,8 +28,9 @@ public class EmployeeManagementApp {
 
     }
 
+    //Display of Commands
     public static void displayCommands(){
-        System.out.println("Enter Command: Add, Edit, Fire, List, Search, Exit");
+        System.out.println("Enter Command: Add, Edit (Id), Fire (Id), List, Search (Where?, What?), Exit");
     }
 }
 
