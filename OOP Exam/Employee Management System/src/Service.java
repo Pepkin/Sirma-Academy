@@ -65,24 +65,32 @@ public class Service {
     //Lists all employees that are not Fired
     public void listEmployees() {
         for (Employee employee : employees){
+
             if(employee.getEndDate() == null || employee.getEndDate().equals("null")){
                 System.out.println(employee);
             }else{
 
             }
+
         }
+
     }
 
     //Fires an Employee
     public void fireEmployee(String id) {
         for (Employee employee : employees) {
+
             if (employee.getId().equals(id)) {
                 DateFormat data = new SimpleDateFormat("dd-MM-yy");
                 Date obj = new Date();
                 employee.setEndDate(data.format(obj));
                 break;
             }
+
         }
+
+        System.out.println("Employee not found!");
+
     }
 
     //Searches an Employee by: Name, Department or Id and if that Employee is still employed is displayed

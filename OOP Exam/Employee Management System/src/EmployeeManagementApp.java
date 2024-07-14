@@ -17,7 +17,7 @@ public class EmployeeManagementApp {
             displayCommands();
             String[] command = sc.nextLine().split(" ");
 
-            if(!command[0].equalsIgnoreCase("exit")){
+            if(!command[0].trim().equalsIgnoreCase("exit")){
                 manager.execute(command);
             }else{
                 break;
