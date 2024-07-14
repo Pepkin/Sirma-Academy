@@ -11,8 +11,8 @@ public class DatabaseWriter implements Writer {
             int size = employees.size();
             for (int i = 0; i < size; i++) {
                 Employee employee = employees.get(i);
-                bw.write(String.format("%s, %s, %s, %s, %.2f",
-                        employee.getId(), employee.getName(), employee.getDepartment(),
+                bw.write(String.format("%s,%s,%s,%s,%s,%s,%.2f",
+                        employee.getId(), employee.getName(), employee.getStartDate(), employee.getEndDate(), employee.getDepartment(),
                         employee.getRole(), employee.getSalary()));
                 if (i < size - 1) {
                     bw.write("\n");

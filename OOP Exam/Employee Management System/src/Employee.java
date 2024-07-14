@@ -7,28 +7,27 @@ import static java.lang.StringTemplate.STR;
 public class Employee implements Serializable {
     private String id;
     private String name;
-    private final String startDate = new SimpleDateFormat("dd-MM-yy").format(new Date());
-    private String endDate;
+    private String startDate = new SimpleDateFormat("dd-MM-yy").format(new Date());
+    private String endDate = null;
     private String department;
     private String role;
     private double salary;
-    private boolean working;
 
-    public Employee(String id, String name, String department, String role, double salary) {
+    public Employee(String id, String name, String endDate, String department, String role, double salary) {
         this.id = id;
         this.name = name;
-        this.endDate = null;
+        this.endDate = endDate;
         this.department = department;
         this.role = role;
         this.salary = salary;
-        this.working = true;
     }
 
-    public Employee(String name, String department, String role, double salary){
-        this.name = name;
-        this.department = department;
-        this.role = role;
-        this.salary = salary;
+
+    public Employee(String nameChange, String departmentChange, String roleChange, double salaryChange){
+        this.name = nameChange;
+        this.department = departmentChange;
+        this.role = roleChange;
+        this.salary = salaryChange;
     }
 
 
@@ -77,23 +76,15 @@ public class Employee implements Serializable {
     }
 
     public String getEndDate() {
-        return endDate;
+        return endDate.trim();
     }
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public boolean isWorking() {
-        return working;
-    }
-
-    public void changeWorkStatus(boolean status) {
-        this.working = status;
-    }
-
     @Override
     public String toString() {
-        return STR."\{this.id}, \{this.name}, \{this.department}, \{this.role}, \{this.salary}, \{this.working}";
+        return STR."\{this.id}, \{this.name},\{this.startDate}, \{this.endDate}, \{this.department}, \{this.role}, \{this.salary}";
     }
 }

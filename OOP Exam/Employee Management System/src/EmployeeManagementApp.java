@@ -8,21 +8,21 @@ public class EmployeeManagementApp {
         Manager manager = new Manager(service);
         Scanner sc = new Scanner(System.in);
 
-
         System.out.println("Welcome to Employee Management System");
-        displayCommands();
-        String[] command = sc.nextLine().split(" ");
+
         boolean isRunning = true;
+
         while(isRunning){
+
+            displayCommands();
+            String[] command = sc.nextLine().split(" ");
+
             if(!command[0].equalsIgnoreCase("exit")){
                 manager.execute(command);
             }else{
-                service.saveData("employees.csv");
                 break;
             }
 
-            displayCommands();
-            command = sc.nextLine().split(" ");
         }
 
 

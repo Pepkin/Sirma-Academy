@@ -14,11 +14,12 @@ public class DatabaseReader implements Reader {
                 String[] data = line.split(", ");
                 String id = data[0];
                 String name = data[1];
-                String department = data[2];
-                String role = data[3];
-                double salary = Double.parseDouble(data[4].replace(",","."));
-                Employee employee = new Employee(
-                        id, name, department, role, salary);
+                String startDate = data[2];
+                String endDate = data[3];
+                String department = data[4];
+                String role = data[5];
+                double salary = Double.parseDouble(data[6].replace(",","."));
+                Employee employee = new Employee(id, name, endDate, department, role, salary);
                 employees.add(employee);
             }
         } catch (IOException e) {

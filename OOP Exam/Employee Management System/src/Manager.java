@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.Scanner;
 
 public class Manager {
@@ -11,10 +10,10 @@ public class Manager {
 
 
     public void execute(String[] command) {
-        File file = new File("employees.csv");
-        if (file.exists()) {
-            this.service.initialize();
-        }
+//        File file = new File("employees.csv");
+//        if (file.exists()) {
+//            this.service.initialize();
+//        }
 
         switch (command[0].toLowerCase()) {
             case "add":
@@ -45,7 +44,7 @@ public class Manager {
         String department = input[2];
         String role = input[3];
         double salary = Double.parseDouble(input[4]);
-        Employee employee = new Employee(id, name, department, role, salary);
+        Employee employee = new Employee(id, name, null, department, role, salary);
         this.service.addEmployee(employee);
     }
 
@@ -69,7 +68,7 @@ public class Manager {
         this.service.listEmployees();
     }
 
-    public void Search(String type, String query){
-        this.service.searchEmployees(type, query);
+    public void Search(String where, String what){
+        this.service.searchEmployees(where, what);
     }
 }

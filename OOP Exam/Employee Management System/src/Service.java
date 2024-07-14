@@ -1,3 +1,4 @@
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class Service {
     public Service(DatabaseReader fileReader, DatabaseWriter fileWriter) {
         this.fileReader = fileReader;
         this.fileWriter = fileWriter;
+        initialize();
     }
 
     public void initialize() {
@@ -48,9 +50,11 @@ public class Service {
 
 
     public void listEmployees() {
-        for (int i = 0; i < employees.size(); i++) {
-            if(employees.get(i).isWorking()){
-                System.out.println(employees.get(i));
+        for (Employee employee : employees){
+            if(employee.getEndDate().equals("null")){
+                System.out.println(employee);
+            }else{
+
             }
         }
     }
@@ -58,7 +62,6 @@ public class Service {
     public void fireEmployee(String id) {
         for (Employee employee : employees) {
             if (employee.getId().equals(id)) {
-                employee.changeWorkStatus(false);
                 DateFormat data = new SimpleDateFormat("dd-MM-yy");
                 Date obj = new Date();
                 employee.setEndDate(data.format(obj));
@@ -67,11 +70,11 @@ public class Service {
         }
     }
 
-    public void searchEmployees(String type, String query) {
+    public void searchEmployees(String where, String what) {
         for (Employee employee : employees) {
-            if (type.equalsIgnoreCase("name") && employee.getName().equalsIgnoreCase(query)
-                    || type.equalsIgnoreCase("id") && employee.getId().equalsIgnoreCase(query)
-                    || type.equalsIgnoreCase("department") && employee.getDepartment().equalsIgnoreCase(query)) {
+            if (where.equalsIgnoreCase("name") && employee.getName().equalsIgnoreCase(what)
+                    || where.equalsIgnoreCase("id") && employee.getId().equalsIgnoreCase(what)
+                    || where.equalsIgnoreCase("department") && employee.getDepartment().equalsIgnoreCase(what)) {
                 System.out.println(employee);
             }else{
                 System.out.println("Nothing found");
