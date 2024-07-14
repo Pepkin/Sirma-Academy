@@ -8,7 +8,7 @@ public class EmployeeManagementApp {
         Manager manager = new Manager(service);
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Welcome to Employee Management System");
+        System.out.println("Welcome to Employee Management System\n");
 
         boolean isRunning = true;
 
@@ -30,7 +30,7 @@ public class EmployeeManagementApp {
 
     //Display of Commands
     public static void displayCommands(){
-        System.out.println("Enter Command: Add, Edit (Id), Fire (Id), List, Search (Where?, What?), Exit");
+        System.out.println("Enter Command: \nAdd \nEdit (Id) \nFire (Id) \nList \nSearch (Where?, What?) \nExit");
     }
 }
 
